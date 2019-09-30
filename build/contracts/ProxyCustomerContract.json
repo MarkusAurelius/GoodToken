@@ -1,0 +1,126 @@
+{
+  "contractName": "ProxyCustomerContract",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/markus/Ethereum/final-project/good-life-token/contracts/ProxyCustomerContract.sol\":\"ProxyCustomerContract\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/markus/Ethereum/final-project/good-life-token/contracts/GoodLifeToken.sol\":{\"keccak256\":\"0x1e9bc6a4612069c60771cd7b517b1a15f1bd9af98e60392a394b7c91da77db8d\",\"urls\":[\"bzzr://bf4ddcbc6371e64b8c68f1096f895aa22906a0c3273be6080e6a0a1bee838811\"]},\"/home/markus/Ethereum/final-project/good-life-token/contracts/ProxyCustomerContract.sol\":{\"keccak256\":\"0xa11c68867d07cbb11e41ddbbcb85ff30fec215bba6fdbb37b73f395f17d37e75\",\"urls\":[\"bzzr://f60a8a3b4d1686b9a02759b679eff3188cc69c8ddf456ca93d0c35338ef8b75f\"]},\"/home/markus/Ethereum/final-project/good-life-token/contracts/roles/CustomerRole.sol\":{\"keccak256\":\"0x50bfaac2f09f768189ee3ec7fef10be1ba4076c244dd3480825b51fc138612f8\",\"urls\":[\"bzzr://72230a5890fda78df6da050b46d0af88e1d262da218f2032897d8e4838489a49\"]},\"openzeppelin-solidity/contracts/access/Roles.sol\":{\"keccak256\":\"0xb002c378d7b82a101bd659c341518953ca0919d342c0a400196982c0e7e7bcdb\",\"urls\":[\"bzzr://bd34c1ce05b5b2b3a62fc02e160f6805b1cadd476854664f433c685b2fda8dad\"]},\"openzeppelin-solidity/contracts/access/roles/MinterRole.sol\":{\"keccak256\":\"0x7ae0d0a2b3ffc9f228f8c55484ea7fc31fc8c0eccc1d496adaeda081289ffa58\",\"urls\":[\"bzzr://a6aecd2934b99e55f830a8a37db202d3d004bfe74d39c8a402a33f3bc0ae7167\"]},\"openzeppelin-solidity/contracts/math/SafeMath.sol\":{\"keccak256\":\"0x4ccf2d7b51873db1ccfd54ca2adae5eac3b184f9699911ed4490438419f1c690\",\"urls\":[\"bzzr://1604f5b6d6e916c154efd8c6720cda069e5ba32dfa0a9dedf2b42e5b02d07f89\"]},\"openzeppelin-solidity/contracts/ownership/Ownable.sol\":{\"keccak256\":\"0xf79fb10e8235770eb4aea7249034076a3cc9f9119ad944fc48705bae9c9d20dc\",\"urls\":[\"bzzr://d12a11272051eb6586de8f7e0a82c04a98c9984ce8b2a6cf1ee439f65aba29a9\"]},\"openzeppelin-solidity/contracts/token/ERC20/ERC20.sol\":{\"keccak256\":\"0x852793a3c2f86d336a683b30d688ec3dcfc57451af5a2bf5975cda3b7191a901\",\"urls\":[\"bzzr://07fb42206812a17c1f71e548cfa5cec6f9aa1ae0ca5df870718ca4aa9759d1a5\"]},\"openzeppelin-solidity/contracts/token/ERC20/ERC20Detailed.sol\":{\"keccak256\":\"0xc61b3603089b09a730d8ca72e9133a496cc4405da40e9b87c12f073245d774bf\",\"urls\":[\"bzzr://f280f38d5ab6e1b89fd898ccd3901054a56572c141d91d30302e2db1db4cc6ff\"]},\"openzeppelin-solidity/contracts/token/ERC20/ERC20Mintable.sol\":{\"keccak256\":\"0xc85c23524c88f7c56d7afefef44f6bf786d736713a7ead688d4dc57571c86346\",\"urls\":[\"bzzr://7e1a4f081ccd88a70e48597882e4d54c6f21b5d05bff237669a3c5e87856cc9f\"]},\"openzeppelin-solidity/contracts/token/ERC20/IERC20.sol\":{\"keccak256\":\"0x90e8c2521653bbb1768b05889c5760031e688d9cd361f167489b89215e201b95\",\"urls\":[\"bzzr://aa8b45b57edafc3d67bc5d916327ea16807fae33f753ca163ae0c4061b789766\"]},\"openzeppelin-solidity/contracts/utils/ReentrancyGuard.sol\":{\"keccak256\":\"0x0441ff2b36d503f3a29d28d3754291f119064f4973d5c780698143d919037a78\",\"urls\":[\"bzzr://d26b514ac785d2a74a903067d051b34541e86a7fc63b782bb39d3a576d8eb4da\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603580601d6000396000f3fe6080604052600080fdfea165627a7a723058206cfa3bb130d6afcdc36f85e4175eb4ee7cd66944bd4af71565771138f30191950029",
+  "deployedBytecode": "0x6080604052600080fdfea165627a7a723058206cfa3bb130d6afcdc36f85e4175eb4ee7cd66944bd4af71565771138f30191950029",
+  "sourceMap": "56:35:3:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;56:35:3;;;;;;;",
+  "deployedSourceMap": "56:35:3:-;;;;;",
+  "source": "pragma solidity ^0.5.0;\n\nimport \"./GoodLifeToken.sol\";\n\ncontract ProxyCustomerContract {\n\n}",
+  "sourcePath": "/home/markus/Ethereum/final-project/good-life-token/contracts/ProxyCustomerContract.sol",
+  "ast": {
+    "absolutePath": "/home/markus/Ethereum/final-project/good-life-token/contracts/ProxyCustomerContract.sol",
+    "exportedSymbols": {
+      "ProxyCustomerContract": [
+        693
+      ]
+    },
+    "id": 694,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 691,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:3"
+      },
+      {
+        "absolutePath": "/home/markus/Ethereum/final-project/good-life-token/contracts/GoodLifeToken.sol",
+        "file": "./GoodLifeToken.sol",
+        "id": 692,
+        "nodeType": "ImportDirective",
+        "scope": 694,
+        "sourceUnit": 633,
+        "src": "25:29:3",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 693,
+        "linearizedBaseContracts": [
+          693
+        ],
+        "name": "ProxyCustomerContract",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 694,
+        "src": "56:35:3"
+      }
+    ],
+    "src": "0:91:3"
+  },
+  "legacyAST": {
+    "absolutePath": "/home/markus/Ethereum/final-project/good-life-token/contracts/ProxyCustomerContract.sol",
+    "exportedSymbols": {
+      "ProxyCustomerContract": [
+        693
+      ]
+    },
+    "id": 694,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 691,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:3"
+      },
+      {
+        "absolutePath": "/home/markus/Ethereum/final-project/good-life-token/contracts/GoodLifeToken.sol",
+        "file": "./GoodLifeToken.sol",
+        "id": 692,
+        "nodeType": "ImportDirective",
+        "scope": 694,
+        "sourceUnit": 633,
+        "src": "25:29:3",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 693,
+        "linearizedBaseContracts": [
+          693
+        ],
+        "name": "ProxyCustomerContract",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 694,
+        "src": "56:35:3"
+      }
+    ],
+    "src": "0:91:3"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.8+commit.23d335f2.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.11",
+  "updatedAt": "2019-09-12T10:31:44.241Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}
