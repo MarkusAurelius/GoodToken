@@ -1,0 +1,37 @@
+[
+  {
+    "id": 0,
+    "name": "Lettuce",
+    "picture": "images/lettuce.jpeg",
+    "price": 200,
+    "ecoFootprint" : 2
+  },
+  {
+    "id": 1,
+    "name": "Tomato",
+    "picture": "images/tomato.jpeg",
+    "price": 175,
+    "ecoFootprint" : 3 
+  },
+  {
+    "id": 2,
+    "name": "Potato",
+    "picture": "images/potato.jpeg",
+    "price": 225,
+    "ecoFootprint" : 1
+  },
+  {
+    "id": 3,
+    "name": "Cucumber",
+    "picture": "images/cucumber.jpeg",
+    "price": 150,
+    "ecoFootprint" : 4 
+  },
+  {
+    "id": 4,
+    "name": "Celery",
+    "picture": "images/celery.jpeg",
+    "price": 345,
+    "ecoFootprint" : 3
+  }
+]
