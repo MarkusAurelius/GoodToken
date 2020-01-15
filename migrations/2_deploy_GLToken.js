@@ -12,16 +12,26 @@ var GLTMerchantSale = artifacts.require("./GLTMerchantSale.sol");
 var GoodLifeToken = artifacts.require("./GoodLifeToken.sol");
 
 module.exports = async function(deployer, network, accounts) {
+    var crowdSale;
     const ethRate = new BigNumber(50000000000000); //1 EUR Cent
     const wallet = accounts[0];
-    deployer.deploy(GoodLifeToken).then(() => {
+    deployer.deploy(GoodLifeToken, { from: accounts[0] }).then(() => {
       return deployer.deploy(GLTMerchantSale,
                              ethRate,
                              wallet, 
-                             GoodLifeToken.address);
-    }).then(async () => {
-      var token = await GoodLifeToken.deployed();
-      await token.transferOwnership(GoodLifeToken.address);       
+                             GoodLifeToken.address,
+                             { from: accounts[0] });
+    }).then(inst => {
+       crowdSale = inst;
+       crowdSale.token().then(async(addr) => { tokenAddress = addr;
+       			var goodLifeTokenInstance = await GoodLifeToken.at(tokenAddress);
+                  goodLifeTokenInstance.addMinter(crowdSale.address)});
+                  //goodLifeTokenInstance.addMinter(crowdSale.address);
+                  //goodLifeTokenInstance.addMinter(accounts[0])});
+ 
+       	    
+      //var token = await GoodLifeToken.deployed();
+      //await token.transferOwnership(GoodLifeToken.address);       
     });      
-
+   
 }

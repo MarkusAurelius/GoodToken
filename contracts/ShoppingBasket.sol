@@ -1,21 +1,19 @@
-/*
-    This exercise has been updated to use Solidity version 0.5
-    Breaking changes from 0.4 to 0.5 can be found here: 
-    https://solidity.readthedocs.io/en/v0.5.0/050-breaking-changes.html
-*/
 
 import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 pragma solidity ^0.5.0;
+
+
+/* 
+ * This contract implements a shopping basket that contains different procducts with several attributes.
+ * The Shopping Basket represents a purchase of a customer and is hence the prerequiste of a token collection.
+ */
 
 contract ShoppingBasket {
   using SafeMath for uint; 
 
   /* set owner */
   address owner;
-
-  /* Add a variable called skuCount to track the most recent sku # */
-  uint private skuCount;
 
   /* amount of tokens that the purchase contains */
   uint private tokenAmount = 0;
@@ -30,7 +28,12 @@ contract ShoppingBasket {
   /* Add a line that creates a public mapping that maps the SKU (a number) to an Item.
      Call this mappings items
   */
-  mapping(uint => Item) public basket;
+  mapping(uint => Item) private basket;
+
+  uint[] public listOfBasketItemIds;
+
+  uint private listOfItemsCounter = 0;
+
   
   /*Struct named Item.
     It consists of a name, sku, quantity, price, state, seller, and buyer
@@ -39,64 +42,91 @@ contract ShoppingBasket {
     Be sure to add "payable" to addresses that will be handling value transfer
   */
   struct Item {
+      uint id;
       string name;
-      uint sku;
       uint quantity;
       uint price;
       uint ecoFootprint;
+      string imgRef;
   }
 
-  event LogForAddItemToBasket(uint sku);
+  event LogForAddItemToBasket(uint id);
   event LogSold(uint tokenAmount);
 
 /* Create a modifer that checks if the msg.sender is the owner of the contract */
   modifier verifyCaller (address _address) { require (msg.sender == _address); _;}
 
 
-  /* For each of the following modifiers, use what you learned about modifiers
-   to give them functionality. For example, the forSale modifier should require
-   that the item with the given sku has the state ForSale. 
-   Note that the uninitialized Item.State is 0, which is also the index of the ForSale value,
-   so checking that Item.State == ForSale is not sufficient to check that an Item is for sale.
-   Hint: What item properties will be non-zero when an Item has been added?
-   */
 
   constructor() public {
-    /* Here, set the owner as the person who instantiated the contract
-       and set your skuCount to 0. */
+    /* Here, set the owner as the person who instantiated the contract*/
+
     owner = msg.sender;
-    skuCount = 0;
+    listOfBasketItemIds = new uint[](16);
   }
-
-  function addItem(string memory _name, uint _quantity, uint _price, uint _ecoFootprint) public returns(bool) {
-    emit LogForAddItemToBasket(skuCount);
-    basket[skuCount] = Item({name: _name, sku: skuCount, quantity: _quantity, price: _price, ecoFootprint: _ecoFootprint});
-    skuCount = skuCount.add(1);
+  
+  /*
+   * Adds an item / product to the shopping basket.
+   * Emits a {LogForAddItemToBasket} event.
+   *
+   * @param id An unique identifier of the item.
+   * @param name The name of the item.
+   * @param quantity The number of items.
+   * @param price The price of the item.
+   * @param ecoFootPrint A factor that represents the eco footprint of the item.
+   * @param imgRef A reference to the image of the item.
+   *
+   * Returns the accumulated ammount of tokens that has been collected so far in the current shopping basket instance.
+   */
+  function addItem(uint _id, string memory _name, uint _quantity, uint _price, uint _ecoFootprint, string memory _imgRef) public returns(uint) {
+    emit LogForAddItemToBasket(_id);
+    basket[_id] = Item({id: _id, name: _name, quantity: _quantity, price: _price, ecoFootprint: _ecoFootprint, imgRef: _imgRef}); 
     tokenAmount = tokenAmount.add(_price.mul(_quantity).mul(_ecoFootprint).div(ecoFootprintDecimalFactor).div(decimalFactor));
-    return true;
+    listOfBasketItemIds[listOfItemsCounter] = _id;
+    listOfItemsCounter = listOfItemsCounter.add(1);
+    return tokenAmount;
   }
 
-  /* Add a keyword so the function can be paid. This function should transfer money
-    to the seller, set the buyer as the person who called this transaction, and set the state
-    to Sold. Be careful, this function should use 3 modifiers to check if the item is for sale,
-    if the buyer paid enough, and check the value after the function is called to make sure the buyer is
-    refunded any excess ether sent. Remember to call the event associated with this function!*/
-
+  /*
+   * This function is called when the customer decides to finalize the purchase.
+   * He will perform the payment (what isn't part of this dapp) and receives at the same time the collected tokens on his account.
+   * The token amount and the counter variable (which represents the consecutive index) are set to 0.
+   *
+   * Returns the collected amount of tokens.
+   */
   function purchaseItems() 
     public 
     returns (uint){
        emit LogSold(tokenAmount);
-       return tokenAmount;      
+       uint collectedAmountOfTokens = tokenAmount;
+       tokenAmount = 0;
+       listOfItemsCounter = 0;
+       delete listOfBasketItemIds;
+       return collectedAmountOfTokens;      
        
   }
-
-  function fetchItem(uint _sku) public view returns (string memory name, uint sku, uint quantity, uint price, uint ecoFootprint) {
-    name = basket[_sku].name;
-    sku = basket[_sku].sku;
-    quantity = basket[_sku].quantity;
-    price = basket[_sku].price;
-    ecoFootprint = basket[_sku].ecoFootprint;
-    return (name, sku, quantity, price, ecoFootprint);
+  
+  /*
+   * Returns all attributes of an item dependent on the provided id of the item.
+   *
+   * Returns the id, the name, the quantity, the price, the eco footprint and the image referer of the item.
+   */
+  function getItemAttributes(uint _id) public view returns (uint id, string memory name, uint quantity, uint price, uint ecoFootprint, string memory imgRef) {
+    name = basket[_id].name;
+    quantity = basket[_id].quantity;
+    price = basket[_id].price;
+    ecoFootprint = basket[_id].ecoFootprint;
+    imgRef = basket[_id].imgRef;
+    return (_id, name, quantity, price, ecoFootprint, imgRef);
+  }
+  
+  /*
+   * Returns a list of ids of all items of the current shopping basket. 
+   *
+   * Returns an array of item ids that are included in the current shopping basket. 
+   */
+  function getListOfBasketItemIds() public view returns (uint[] memory) {
+    return listOfBasketItemIds;
   }
 
 }

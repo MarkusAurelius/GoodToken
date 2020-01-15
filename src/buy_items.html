@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Markus' Grocery Store</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-push-2">
+          <h1 class="text-center">Markus' Grocery</h1>
+          <hr/>
+          <br/>
+        </div>
+      </div>
+      <h3 class="text-center">Grocery Offer</h3>
+      <div id="groceriesRow" class="row">
+        <!-- GROCERY OFFER LOAD HERE -->
+      </div>
+      <h3 class="text-center">Your Basket</h3>
+      <div id="basketRow" class="row">
+            <!-- BASKET LOAD HERE -->
+      </div>
+      <div id="collectDiv" style="display: none;"></div>
+            <button class="btn btn-default_collect btn-collectTokens" type="button" data-id="0">Collect</button><br/>
+            <strong>Tokens Collected</strong>: <span id="tokens-collected"></span><br/>
+            <strong>Good Life Token Account Balance</strong>: <span id="account balance"></span><br/>
+       </div>
+    </div>
+
+    <div id="groceryTemplate" style="display: none;">
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="panel panel-default panel-grocery">
+          <div class="panel-heading">
+            <h3 class="panel-title">Scrappy</h3>
+          </div>
+              <div class="panel-body">
+                <img alt="140x140" data-src="holder.js/140x140" class="img-rounded img-center" style="width: 100%;" src="https://animalso.com/wp-content/uploads/2017/01/Golden-Retriever_6.jpg" data-holder-rendered="true">
+                <br/><br/>
+                <label for="quantity">Quantity</label>
+                <input id="" type="number" class="grocery-quantity"></input><br/>
+                <strong>Price</strong>: <span class="grocery-price">1.50</span><br/>
+                <strong>Eco Footprint</strong>: <span class="grocery-ecoFootprint">3</span><br/>
+                <button class="btn btn-default btn-addToBasket" type="button" data-id="0">Add</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="basketTemplate" style="display: none;">
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                  <div class="panel panel-default panel-basket">
+                    <div class="panel-heading">
+                      <h3 class="panel-title">Scrappy</h3>
+                    </div>
+                    <div class="panel-body">
+                          <img alt="140x140" data-src="holder.js/140x140" class="img-rounded img-center" style="width: 100%;" src="https://animalso.com/wp-content/uploads/2017/01/Golden-Retriever_6.jpg" data-holder-rendered="true">
+                          <br/><br/>
+                          <strong>Quantity</strong>: <span class="basket-quantity">3</span><br/>
+                          <strong>Price</strong>: <span class="basket-price">1.50</span><br/>
+                          <strong>Eco Footprint</strong>: <span class="basket-ecoFootprint">3</span><br/>
+                    </div>
+                 </div>
+                </div>
+        </div>
+        
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/web3.min.js"></script>
+        <script src="js/truffle-contract.js"></script>
+        <script src="js/app.js"></script>
+      </body>
+    </html>
+    

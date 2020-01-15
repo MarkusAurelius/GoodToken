@@ -21,7 +21,7 @@ The max value for an unsigned integer is 2 ^ 256 - 1, which is roughly 1.15 time
 
 Applied Solution:
 - This risks should be mitigated by applying the SafeMath library for all mathematical operations.
-- Moreover Require checks are implemented for the number of tokens to be collected and to be redeemed. It isn't possible to collect more tokens than a merchant posses or to redeem more tokens than a customer has got on his balance sheet.
+- Moreover Require checks are implemented for the number of tokens to be collected and to be redeemed. It isn't possible to collect more tokens than a merchant possesses or to redeem more tokens than a customer has got on his balance sheet.
 
 ##### Denial of Service by Block Gas Limit (or startGas)
 Problem:

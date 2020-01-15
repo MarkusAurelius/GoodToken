@@ -40,7 +40,7 @@ contract MinterRoleMock is MinterRole {
         _removeMinter(account);
     }
 
-    function onlyMinterMock() public view onlyMinter {
+    function onlyMinterMock() public onlyMinter {
         // solhint-disable-previous-line no-empty-blocks
     }
 

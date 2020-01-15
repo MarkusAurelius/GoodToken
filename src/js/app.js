@@ -1,38 +1,39 @@
-App = {
+Collect = {
   web3Provider: null,
   contracts: {},
 
-  init: async function() {
-    // Load pets.
-    $.getJSON('../pets.json', function(data) {
-      var petsRow = $('#petsRow');
-      var petTemplate = $('#petTemplate');
+  initApp: async function() {
+    // Load grocerys.
+    $.getJSON('../groceries.json', function(data) {
+      var groceriesRow = $('#groceriesRow');
+      var groceryTemplate = $('#groceryTemplate');
 
       for (i = 0; i < data.length; i ++) {
-        petTemplate.find('.panel-title').text(data[i].name);
-        petTemplate.find('img').attr('src', data[i].picture);
-        petTemplate.find('.pet-breed').text(data[i].breed);
-        petTemplate.find('.pet-age').text(data[i].age);
-        petTemplate.find('.pet-location').text(data[i].location);
-        petTemplate.find('.btn-adopt').attr('data-id', data[i].id);
+        var name = data[i].name;
+        var picture = data[i].picture;
+        var price = data[i].price;
+        var ecoFootprint = data[i].ecoFootprint;
+        var id = data[i].id
+        groceryTemplate.find('.panel-title').text(name);
+        groceryTemplate.find('img').attr('src', picture);
+        //groceryTemplate.find('.grocery-quantity').text();
+        groceryTemplate.find('.grocery-quantity').attr('id', 'quantity'+ id);
+        groceryTemplate.find('.grocery-price').text(price);
+        groceryTemplate.find('.grocery-ecoFootprint').text(ecoFootprint);
+        groceryTemplate.find('.grocery-ecoFootprint').text(ecoFootprint);
+        groceryTemplate.find('.btn-addToBasket').attr('data-id', id);
+        groceriesRow.append(groceryTemplate.html());
 
-        petsRow.append(petTemplate.html());
       }
     });
+    return await Collect.initWeb3();
 
-    return await App.initWeb3();
   },
 
   initWeb3: async function() {
     
-    /*if(typeof web3 !== "undefined") {
-      App.web3Provider = web3.currentProvider;
-    } else {
-      App.web3Provider = new Web3.providers.httpProvider('http://localhost:8545');
-    }
-    web3 = new Web3(App.web3Provider);*/
     if (window.ethereum) {
-      App.web3Provider = window.ethereum;
+      Collect.web3Provider = window.ethereum;
       try {
         // Request account access
         await window.ethereum.enable();
@@ -41,126 +42,168 @@ App = {
         console.error("User denied account access")
       }
     }
-    // Legacy dapp browsers...
+    // Legacy dCollect browsers...
     else if (window.web3) {
-      App.web3Provider = window.web3.currentProvider;
+      Collect.web3Provider = window.web3.currentProvider;
     }
     // If no injected web3 instance is detected, fall back to Ganache
     else {
-      App.web3Provider = new Web3.providers.HttpProvider('http://localhost:8545');
+      Collect.web3Provider = new Web3.providers.HttpProvider('http://localhost:8545');
     }
-    web3 = new Web3(App.web3Provider);
+    web3 = new Web3(Collect.web3Provider);
 
-    return App.initContract();
+    return Collect.initContract();
   },
 
   initContract: function() {
-    /*$.getJSON('Adoption.json', function(data){
-    var AdoptionArtifact = data;
-    App.contracts.Adoption = TruffleContract(AdoptionArtifact);
-    App.contracts.Adoption.setProvider(App.web3Provider);
-    return App.markAdopted();
-    });
-    return App.bindEvents();
-  },*/
   
-    $.getJSON('Adoption.json', function(data) {
+    $.getJSON('ShoppingBasket.json', function(data) {
     // Get the necessary contract artifact file and instantiate it with truffle-contract
-    var AdoptionArtifact = data;
-    App.contracts.Adoption = TruffleContract(AdoptionArtifact);
-  
+    var ShoppingBasketArtifact = data;
+    Collect.contracts.ShoppingBasket = TruffleContract(ShoppingBasketArtifact);
+    
     // Set the provider for our contract
-    App.contracts.Adoption.setProvider(App.web3Provider);
+    Collect.contracts.ShoppingBasket.setProvider(Collect.web3Provider);
   
-    // Use our contract to retrieve and mark the adopted pets
-    return App.markAdopted();
+    // Use our contract to retrieve and display the add grocerys
+    return Collect.addedToBasket();
     });
-    return App.bindEvents();
+
+    $.getJSON('GLTMerchantSale.json', function(data) {
+      // Get the necessary contract artifact file and instantiate it with truffle-contract
+    var GLTMerchantSaleArtifact = data;
+    Collect.contracts.GLTMerchantSale = TruffleContract(GLTMerchantSaleArtifact);
+    // Set the provider for our contract
+    Collect.contracts.GLTMerchantSale.setProvider(Collect.web3Provider);
+    });
+
+    $.getJSON('GoodLifeToken.json', function(data) {
+      // Get the necessary contract artifact file and instantiate it with truffle-contract
+    var GoodLifeTokenArtifact = data;
+    Collect.contracts.GoodLifeToken = TruffleContract(GoodLifeTokenArtifact);
+    // Set the provider for our contract
+    Collect.contracts.GoodLifeToken.setProvider(Collect.web3Provider);
+    });
+
+    return Collect.bindEvents();
   },
 
 
   bindEvents: function() {
-    $(document).on('click', '.btn-adopt', App.handleAdopt);
+    $(document).on('click', '.btn-addToBasket', Collect.handleAddToBasket);
+    $(document).on('click', '.btn-collectTokens', Collect.handleCollectTokens);
   },
 
-  markAdopted: function(adopters, account) {
-    /*var adoptionInstance
-    App.contracts.Adoption.deployed().then(function(instance){
-      adoptionInstance = instance;
-      return adoptionInstance.getAdopters().call();
-    }).then(function(adopters){
-      for(var i = 0; i < adopters.length; i++) {
-        if(adopters[i] !== '0x0000000000000000000000000000000000000000') {
-          $('.panel-pet').eq(i).find('button').text('Success').attr('disabled', true);
-        }
-      }
-    }).catch(function(err) {
-      console.log(err.message);
-    });*/
+  addedToBasket: function(id, itemValues) {
 
-    var adoptionInstance;
-
-    App.contracts.Adoption.deployed().then(function(instance) {
-      adoptionInstance = instance;
-
-      return adoptionInstance.getAdopters.call();
-    }).then(function(adopters) {
-      for (i = 0; i < adopters.length; i++) {
-        if (adopters[i] !== '0x0000000000000000000000000000000000000000') {
-          $('.panel-pet').eq(i).find('button').text('Success').attr('disabled', true);
-        }
-      }
-    }).catch(function(err) {
-      console.log(err.message);
-    });
+    var shoppingBasketInstance;
+    var basketRow = $('#basketRow');
+    var basketTemplate = $('#basketTemplate');
+    
+    Collect.contracts.ShoppingBasket.deployed().then(function(instance) {
+      shoppingBasketInstance = instance;
+     
+          return shoppingBasketInstance.getItemAttributes.call(id);
+      }).then(function(itemValues) {
+          var name = itemValues[1];
+          var quantity = itemValues[2];
+          var price = itemValues[3];
+          var ecoFootPrint = itemValues[4];
+          var picture = itemValues[5]; 
+          basketTemplate.find('.panel-title').text(itemValues[1]);
+          basketTemplate.find('.basket-quantity').text(itemValues[2]);
+          basketTemplate.find('.basket-price').text(itemValues[3]);
+          basketTemplate.find('.basket-ecoFootprint').text(itemValues[4]);
+          basketTemplate.find('img').attr('src', itemValues[5]);
+          
+          basketRow.append(basketTemplate.html());
+        }).catch(function(err) {
+          console.log(err.message);
+        });
   },
 
-  handleAdopt: function(event) {
-   /* event.preventDefault();
+  handleAddToBasket: function(event) {
+    
+    var shoppingBasketInstance;
+    var name;
+    var price;
+    var ecoFootprint;
+    var picture;
+    var id = $(event.target).data('id');
+    var quantity = $('#quantity' + id).val();
 
-    var petId = parseInt($(event.target).data('id'));
-    var adoptionInstance;
-    web3.eth.getAccounts(function(err, accounts){
-      if(err) console.log(err);
-      var account = accounts[0];
-
-      App.contracts.Adoption.deployed().then(function(instance){
-        adoptionInstance = instance;
-        return adoptionInstance.adopt(petId, {from:account});
-      }).then(function(result){
-        return App.markAdopted();
-      }).catch(function(err) {
-        console.log(err.message);
+    $.getJSON('../groceries.json', function(data) {
+      name = data[id].name;
+      picture = data[id].picture;
+      price = data[id].price;
+      ecoFootprint = data[id].ecoFootprint;
+      var id1 = id;
+      var name1 = name;
+      var quantity1 = quantity;
+      var picture1 = picture;
+      var price1 = price;
+      var ecoFootprint1 = ecoFootprint;
       });
-    });*/
-    var petId = parseInt($(event.target).data('id'));
-    var adoptionInstance;
 
     web3.eth.getAccounts(function(error, accounts) {
       if (error) {
         console.log(error);
       }
-
+      
+      //var quantity = $('input[id="quantity"')[id];
       var account = accounts[0];
-
-      App.contracts.Adoption.deployed().then(function(instance) {
-        adoptionInstance = instance;
-
-        // Execute adopt as a transaction by sending account
-        return adoptionInstance.adopt(petId, {from: account});
-      }).then(function(result) {
-        return App.markAdopted();
-      }).catch(function(err) {
-        console.log(err.message);
-      });
+     
+      Collect.contracts.ShoppingBasket.deployed().then(function(instance) {
+        shoppingBasketInstance = instance;
+      return shoppingBasketInstance.addItem(id, name, quantity, price, ecoFootprint, picture, {from: account});
+          }).then(function(result) {
+            return Collect.addedToBasket(id);
+          });
+          /*.catch(function(err) {
+            console.log(err.message);
+          });*/
+        
     });
 
   },
+
+handleCollectTokens: function(tokensCollected) {
+    
+    var shoppingBasketInstance;
+    var tokenAmount;
+    web3.eth.getAccounts(function(error, accounts) {
+        if (error) {
+            console.log(error);
+        }
+        Collect.contracts.ShoppingBasket.deployed().then(function(instance) {
+        shoppingBasketInstance = instance;
+        var account = accounts[0];
+        return shoppingBasketInstance.purchaseItems.call({from: accounts[0]});
+         }).then(async function(tokensCollected) {
+           $("#tokens-collected").text(tokensCollected);
+           var crowdsale = await Collect.contracts.GLTMerchantSale.deployed({from: accounts[0]});
+           var tokenAddress = await crowdsale.token({from: accounts[0]});
+           var goodLifeToken = await Collect.contracts.GoodLifeToken.at(tokenAddress, {from: accounts[0]});
+           //There is currently no other chance to transfer the tokens from the single active account 
+           //account to the same single active due to restrictions of Metamask of not being able to unlock
+           //multiple accounts:
+           //https://medium.com/metamask/metamask-permissions-system-delay-retrospective-9c49d01039d6
+           //await goodLifeToken.collectTokens(accounts[0], accounts[0], tokensCollected, {from: accounts[0]});
+           console.log("Good Life Token Instance: " + goodLifeToken);
+           var balanceOfCustomer = await goodLifeToken.balanceOf(accounts[0], {from: accounts[0]});
+           $("#account-balance").text(balanceOfCustomer);
+           //return Collect.displayCollectedTokens(tokenAmount);
+         }).catch(function(err) {
+            console.log(err.message);
+         });
+    });
+  },
 };
+
+
 
 $(function() {
   $(window).load(function() {
-    App.init();
+    Collect.initApp();
   });
 });
-

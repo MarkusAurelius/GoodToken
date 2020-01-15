@@ -35,7 +35,7 @@ contract TestGLTMerchantSale {
     }
 
     function testTokenSymbol() public {
-       GoodLifeToken token = merchantSale.glToken();
+       GoodLifeToken token = GoodLifeToken (address(merchantSale.token()));
        string memory symbol = token.symbol();
        string memory expected = "GLT";
        Assert.equal(symbol, expected, "Token symbol should be GLT!"); 
@@ -47,24 +47,6 @@ contract TestGLTMerchantSale {
         uint256 tokenAmount = merchantSale.getTokenAmount(amountInEUR);
         uint256 expected = (amountInEUR * 50000000000000 * 100) / rate;
         Assert.equal(tokenAmount, expected, "Amount of tokens should be 200.000.");
-    }
-    
-    /*function testAddMinter() public {
-       IERC20 ierc20token = merchantSaleInst.token(); 
-       GoodLifeToken token = GoodLifeToken(address(ierc20token));
-       bool isMinter = token.isMinter(address(ierc20token));
-       bool expected = true;
-       Assert.equal(isMinter, expected, "Good Life Token should be a Minter!");
-       
-    }*/
-
-    function testWeiRaised() public {
-       uint256 amountInEUR = 2000;
-       address merchant = address(0x5A86f0cafD4ef3ba4f0344C138afcC84bd1ED222);
-       merchantSale.buyTokens(merchant, amountInEUR);
-       uint256 weiRaised = merchantSale.weiRaised();
-       uint256 expected = amountInEUR * 50000000000000 * 100;
-       Assert.equal(weiRaised, expected, "WeiRaised should be 1E+19");
     }
 
 }

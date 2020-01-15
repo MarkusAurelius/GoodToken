@@ -1,7 +1,8 @@
 Instructions:
 To add: git clone
 npm install openzeppelin-solidity@2.3.0
-
+npm install web3
+npm install lite-server --save-dev
 
 
 import "openzeppelin-solidity/contracts/token/ERC20/StandardToken.sol";

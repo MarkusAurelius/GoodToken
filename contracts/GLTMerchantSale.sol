@@ -19,8 +19,12 @@ contract FiatContract {
     function updatedAt(uint _id) public view returns (uint);
 }
 
-
-  contract GLTMerchantSale is Crowdsale, MintedCrowdsale, Ownable, MerchantRole {
+ /*
+  * This contract implemnts a sale of the "Good Life Token". Since the contract inherited from the MintedCrowdsale contract
+  * only ERC20Mintable tokens can be sold by {GLTMerchantSale}.
+  * Token ownership should be transferred to MintedCrowdsale for minting.
+  */
+  contract GLTMerchantSale is MintedCrowdsale, Ownable, MerchantRole  {
     using SafeMath for uint256; 
     uint256 private _weiRaised;
     uint256 private _rate;
@@ -28,7 +32,12 @@ contract FiatContract {
     GoodLifeToken private _token;
     bool private stopped = false;
 
-    
+    /*
+     * Constructor
+     * @param rate The conversion rate for WEI in EUR cent
+     * @param wallet The Ethereum address from which the tokens should be minted
+     * @param token The ERC20Mintable token which will be minted and sold by this MintedCrowdsale
+     */
     constructor (
         uint256 rate,
         address payable wallet,
@@ -40,14 +49,8 @@ contract FiatContract {
         _rate = rate;
         _weiRaised = 0;
         _owner = msg.sender;
-        _token = GoodLifeToken(address (token));
+        _token = token;
 
-        //address ownerGlt = goodLifeToken.gltOwner(); 
-        //GoodLifeToken gltOwnerInstance = GoodLifeToken(uint160(ownerOfGlt));       
-        //gltOwnerInstance.addMinter(address(token));
-        //address ownerOfGlt = token.gltOwner();
-        //GoodLifeToken gltOwnerInstance = GoodLifeToken(uint160(ownerOfGlt));
-        //gltOwnerInstance.addMinter(address(token));
     }
 
     FiatContract public price;
@@ -57,7 +60,10 @@ contract FiatContract {
       return priceOfOneTokenInEuroWei.mul(oneCent).div(10000000000000000);
     } */
 
-    
+
+    //Emits an event if a token was purchased
+    event TokensPurchased (address indexed account, address beneficiary, uint256 amountOfTokens);
+
 
     modifier isAdmin() {
       require(msg.sender == _owner);
@@ -67,10 +73,6 @@ contract FiatContract {
     modifier stopInEmergency { if (!stopped) _; }
     modifier onlyInEmergency { if (stopped) _; }
 
-    function toggleContractActive() isAdmin public {
-        stopped = !stopped;
-    }
-
     function amountOfETHInEUR(uint amountInEUR) internal pure returns (uint256) {
       // returns $0.01 ETH wei
       // For test and main net
@@ -78,7 +80,11 @@ contract FiatContract {
       uint ethCentInWei = 50000000000000;
       return ethCentInWei.mul(amountInEUR).mul(100);
     } 
-
+    /**
+      * Returns the amount of tokens based on the provided amount of EUR.
+      * @param amountInEUR The amount in EUR currency that should be returned in amount of tokens. 
+      * return The amount of tokens
+      */
     function getTokenAmount(uint256 amountInEUR) public view returns(uint256) {
       //multiply 'provided amountInEUR * WEI in EURCent * 100 Cent
       //uint256 weiAmount = amountInEUR * 50000000000000 * 100;
@@ -87,18 +93,31 @@ contract FiatContract {
       //return _getTokenAmount(weiAmount);
     }
 
+    /*
+     * Returns the the number of weis for this GLTMerchantSale instance. 
+     */
     function weiRaised() public view returns(uint256) {
       return _weiRaised;
     }
 
-    
+
+   /**
+     * @dev low level token purchase 
+     * This function has a non-reentrancy guard, so it shouldn't be called by
+     * another `nonReentrant` function.
+     * 
+     * Emits a {TokensPurchased} event.
+     *
+     * @param beneficiary Recipient of the token purchase
+     * @param amountInEUR Amount of EUR the tokens should be purchased for 
+     */
     function buyTokens(address beneficiary, uint256 amountInEUR) public 
         nonReentrant 
         onlyOwner
         stopInEmergency
         onlyMerchant
         payable {
-        //emit LogBuyTokens(beneficiary, amountInEUR)
+          
           price = FiatContract(0x8055d0504666e2B6942BeB8D6014c964658Ca591); // MAINNET ADDRESS
           price = FiatContract(0x2CDe56E5c8235D6360CCbb0c57Ce248Ca9C80909); // TESTNET ADDRESS (ROPSTEN)
 
@@ -112,8 +131,9 @@ contract FiatContract {
           // update state
           _weiRaised = _weiRaised.add(weiAmount);
 
+          emit TokensPurchased(msg.sender, beneficiary, tokens);
           _processPurchase(beneficiary, tokens);
-          emit TokensPurchased(msg.sender, beneficiary, weiAmount, tokens);
+          //emit TokensPurchased(msg.sender, beneficiary, weiAmount, tokens);
 
           _updatePurchasingState(beneficiary, weiAmount);
 
@@ -125,12 +145,11 @@ contract FiatContract {
       selfdestruct(_owner);
     }
     
+    /*
+    *
+    */
     function destroyAndSend(address payable recipient) public onlyOwner {
       selfdestruct(recipient);
-    }
-
-    function glToken() public view returns(GoodLifeToken) {
-      return _token;
     }
 
  }
