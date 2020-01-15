@@ -1,0 +1,98 @@
+Starting migrations...
+======================
+> Network name:    'ropsten'
+> Network id:      3
+> Block gas limit: 0x7a1200
+
+
+1_initial_migration.js
+======================
+
+   Deploying 'Migrations'
+   ----------------------
+   > transaction hash:    0x4790f3827ae62b8bcd850a7b337e3c0b48a09684bd2f12d37c0f823853488050
+   > Blocks: 0            Seconds: 8
+   > contract address:    0x8689a7164A3c19587A6d3c3D017bA039a94DDa40
+   > block number:        7124970
+   > block timestamp:     1579099020
+   > account:             0x73713078C4Cf8064701141274dD1AE43bEFFDC30
+   > balance:             1.4955339
+   > gas used:            223305
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0044661 ETH
+
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:           0.0044661 ETH
+
+
+2_deploy_GLToken.js
+===================
+
+   Deploying 'GoodLifeToken'
+   -------------------------
+   > transaction hash:    0x24c40269e8fc1c3d6ee84b5ed09c3751b68133c9cb8883af9989dd2cb8e0c92e
+   > Blocks: 0            Seconds: 36
+   > contract address:    0xEDD56e47d71256e90218faEa0aaF9592F1823222
+   > block number:        7124972
+   > block timestamp:     1579099044
+   > account:             0x73713078C4Cf8064701141274dD1AE43bEFFDC30
+   > balance:             1.42775486
+   > gas used:            3346589
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.06693178 ETH
+
+
+   Deploying 'GLTMerchantSale'
+   ---------------------------
+   > transaction hash:    0x15e7214a3892d44a1b1c127f013c823c9a682e38900d446561af9e53732a28b5
+   > Blocks: 0            Seconds: 20
+   > contract address:    0xDFAaa2ba7286c2284E785471eE9872aEb1148A92
+   > block number:        7124973
+   > block timestamp:     1579099085
+   > account:             0x73713078C4Cf8064701141274dD1AE43bEFFDC30
+   > balance:             1.39475696
+   > gas used:            1649895
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0329979 ETH
+
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.09992968 ETH
+
+
+3_deploy_ShoppingBasket.js
+==========================
+
+   Deploying 'ShoppingBasket'
+   --------------------------
+   > transaction hash:    0x6e4cacda9e402cc9ac8d7ac2f29605bdfc3b1cba4a46398599376c3cb3cd59d3
+   > Blocks: 2            Seconds: 8
+   > contract address:    0x89e45A04476c254A21345aE42d216ED0256D90D8
+   > block number:        7124976
+   > block timestamp:     1579099123
+   > account:             0x73713078C4Cf8064701141274dD1AE43bEFFDC30
+   > balance:             1.37828904
+   > gas used:            749990
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0149998 ETH
+
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:           0.0149998 ETH
+
+
+Summary
+=======
+> Total deployments:   4
+> Final cost:          0.11939558 ETH

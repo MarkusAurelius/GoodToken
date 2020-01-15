@@ -38,6 +38,9 @@ This project was developed with the following environment:
 - [npm](https://www.npmjs.com/)
 - Install [truffle](https://www.trufflesuite.com/truffle): `npm install truffle -g`
 - Download and install [Ganache Gui](https://www.trufflesuite.com/ganache) or [ganache-cli](https://www.npmjs.com/package/ganache-cli). Follow the provided instructions to install the desired version of Ganache. Make sure you configure your ganache application to use Port Number 8545.
+- Install [OpenZeppelin](https://openzeppelin.com/contracts/): `npm install openzeppelin-solidity@2.3.0`
+- Install Web3:  `npm install web3`
+- Install lite-server: `npm install lite-server --save-dev`
 
 
   ```.sh
