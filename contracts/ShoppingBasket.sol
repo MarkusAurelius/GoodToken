@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 
 
-import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 
 /* 
@@ -80,7 +80,7 @@ contract ShoppingBasket {
    * Returns the accumulated ammount of tokens that has been collected so far in the current shopping basket instance.
    */
   function addItem(uint _id, string memory _name, uint _quantity, uint _price, uint _ecoFootprint, string memory _imgRef) public returns(uint) {
-    require(_id > 0 && _id < 32, "id must not be lower than 0 and larger than 32.");
+    require(_id >= 0 && _id < 32, "id must not be lower than 0 and larger than 32.");
     emit LogForAddItemToBasket(_id);
     basket[_id] = Item({id: _id, name: _name, quantity: _quantity, price: _price, ecoFootprint: _ecoFootprint, imgRef: _imgRef}); 
     tokenAmount = tokenAmount.add(_price.mul(_quantity).mul(_ecoFootprint).div(ecoFootprintDecimalFactor).div(decimalFactor));
@@ -114,7 +114,7 @@ contract ShoppingBasket {
    * Returns the id, the name, the quantity, the price, the eco footprint and the image referer of the item.
    */
   function getItemAttributes(uint _id) public view returns (uint id, string memory name, uint quantity, uint price, uint ecoFootprint, string memory imgRef) {
-    require(_id > 0 && _id < 32, "id must not be lower than 0 and larger than 32.");
+    require(_id >= 0 && _id < 32, "id must not be lower than 0 and larger than 32.");
     id = _id;
     name = basket[_id].name;
     quantity = basket[_id].quantity;

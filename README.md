@@ -29,7 +29,7 @@ This project was developed with the following environment:
 
 - Ubuntu Ubuntu 18.04.2 LTS
 - npm 6.9.0
-- Truffle v5.0.24 (core: 5.0.24)
+- Truffle v5.1.8 (core: 5.1.8)
 - Solidity v0.5.0 (solc-js)
 - Node v12.14.1
 - Web3.js v1.0.0-beta.37

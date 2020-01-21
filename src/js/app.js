@@ -19,7 +19,7 @@ Collect = {
         //groceryTemplate.find('.grocery-quantity').text();
         groceryTemplate.find('.grocery-quantity').attr('id', 'quantity'+ id);
         groceryTemplate.find('.grocery-price').text(price);
-        groceryTemplate.find('.grocery-ecoFootprint').text(ecoFootprint);
+        groceryTemplate.find('.grocery-currency').text('EUR');
         groceryTemplate.find('.grocery-ecoFootprint').text(ecoFootprint);
         groceryTemplate.find('.btn-addToBasket').attr('data-id', id);
         groceriesRow.append(groceryTemplate.html());
@@ -105,14 +105,11 @@ Collect = {
      
           return shoppingBasketInstance.getItemAttributes.call(id);
       }).then(function(itemValues) {
-          var name = itemValues[1];
-          var quantity = itemValues[2];
-          var price = itemValues[3];
-          var ecoFootPrint = itemValues[4];
-          var picture = itemValues[5]; 
           basketTemplate.find('.panel-title').text(itemValues[1]);
           basketTemplate.find('.basket-quantity').text(itemValues[2]);
-          basketTemplate.find('.basket-price').text(itemValues[3]);
+          var price = itemValues[3] / 100;
+          basketTemplate.find('.basket-price').text(price);
+          basketTemplate.find('.basket-currency').text('EUR');
           basketTemplate.find('.basket-ecoFootprint').text(itemValues[4]);
           basketTemplate.find('img').attr('src', itemValues[5]);
           
@@ -135,14 +132,9 @@ Collect = {
     $.getJSON('../groceries.json', function(data) {
       name = data[id].name;
       picture = data[id].picture;
-      price = data[id].price;
+      price = data[id].price * 100;
+      currency = 'EUR';
       ecoFootprint = data[id].ecoFootprint;
-      var id1 = id;
-      var name1 = name;
-      var quantity1 = quantity;
-      var picture1 = picture;
-      var price1 = price;
-      var ecoFootprint1 = ecoFootprint;
       });
 
     web3.eth.getAccounts(function(error, accounts) {
