@@ -19,7 +19,7 @@ For a purchase that a customer of the merchant is performing an amount of token 
 A customer is making a purchase at a store of a merchant and will partially pay the purchase amount with tokens.
 
 The process flow between all stakeholders looks as follows:
-![Alt text](/src/image/contract-diagram.png?raw=true "Process Flow Chart")
+![Alt text](/src/image/GoodLifeToken_Flow_Chart.png?raw=true "Process Flow Chart")
 
 The web based demo application is currently able to use only one account because of the [missing capability of Metamask to unlock multiple accounts at the same time.](https://medium.com/metamask/metamask-permissions-system-delay-retrospective-9c49d01039d6)
 
