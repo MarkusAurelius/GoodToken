@@ -13,47 +13,47 @@ contract TestShoppingBasket {
     function beforeEach() public {
         shoppingBasket = ShoppingBasket(DeployedAddresses.ShoppingBasket());
         shoppingBasket = new ShoppingBasket();
-        amountOfCollectedTokens = shoppingBasket.addItem(0, "Carrot", 14, 80, 10, "img/carrot.jpg");
+        amountOfCollectedTokens = shoppingBasket.addItem(1, "Carrot", 14, 80, 10, "img/carrot.jpg");
     }
 
     function afterEach() public {
-        shoppingBasket.addItem(0,"", 0, 0, 0, "");
+        shoppingBasket.addItem(1,"", 0, 0, 0, "");
         shoppingBasket.purchaseItems();
     }
 
 
     function testItemId() public {
-        (uint id,,,,,) = shoppingBasket.getItemAttributes(0);
-        uint expected = 0;
-        Assert.equal(id, expected, "Value of ID has to be 0!");
+        (uint id,,,,,) = shoppingBasket.getItemAttributes(1);
+        uint expected = 1;
+        Assert.equal(id, expected, "Value of ID has to be 1!");
     }
 
     function testItemName() public {
-        (,string memory name,,,,) = shoppingBasket.getItemAttributes(0);
+        (,string memory name,,,,) = shoppingBasket.getItemAttributes(1);
         string memory expected = "Carrot";
         Assert.equal(name, expected, "Name of item has to be Carrot!");
     }
     
     function testItemQuantity() public {
-        (,,uint quantity,,,) = shoppingBasket.getItemAttributes(0);
+        (,,uint quantity,,,) = shoppingBasket.getItemAttributes(1);
         uint expected = 14;
         Assert.equal(quantity, expected, "Value of quantity has to 4!");  
     }
 
     function testItemPrice() public {
-        (,,,uint price,,) = shoppingBasket.getItemAttributes(0);
+        (,,,uint price,,) = shoppingBasket.getItemAttributes(1);
         uint expected = 80;
         Assert.equal(price, expected, "Value of price has to be 0,80 EUR!");  
     }
 
     function testItemEcoFootprint() public {
-        (,,,,uint ecoFootprint,) = shoppingBasket.getItemAttributes(0);
+        (,,,,uint ecoFootprint,) = shoppingBasket.getItemAttributes(1);
         uint expected = 10;
         Assert.equal(ecoFootprint, expected, "Eco Footprint has to 10!"); 
     }
 
     function testItemImgRef() public {
-        (,,,,,string memory imgRef) = shoppingBasket.getItemAttributes(0);
+        (,,,,,string memory imgRef) = shoppingBasket.getItemAttributes(1);
         string memory expected = "img/carrot.jpg";
         Assert.equal(imgRef, expected, "Name of item has to be Carrot!");
     }
@@ -81,14 +81,14 @@ contract TestShoppingBasket {
         tokenAmount = shoppingBasket.addItem(2, "Cucumber", 2, 100, 80, "img/cucumber.jpg");
         tokenAmount = shoppingBasket.addItem(3, "Apple", 3, 90, 90, "/img/apple.jpg");
         //tokenAmount = shoppingBasket.purchaseItems();
-        uint[] memory listOfBasketItemIds = shoppingBasket.getListOfBasketItemIds();
+        uint[64] memory listOfBasketItemIds = shoppingBasket.getListOfBasketItemIds();
 
-        uint expected1 = 0;
-        Assert.equal(listOfBasketItemIds[0], expected1, "Value of has to be 0.");
-        uint expected2 = 1;
-        Assert.equal(listOfBasketItemIds[1], expected2, "Value of has to be 1.");
-        uint expected3 = 2;
-        Assert.equal(listOfBasketItemIds[2], expected3, "Value of has to be 2.");
+        uint expected1 = 1;
+        Assert.equal(listOfBasketItemIds[1], expected1, "Value of has to be 1.");
+        uint expected2 = 2;
+        Assert.equal(listOfBasketItemIds[2], expected2, "Value of has to be 2.");
+        uint expected3 = 3;
+        Assert.equal(listOfBasketItemIds[3], expected3, "Value of has to be 3.");
 
     }
 }

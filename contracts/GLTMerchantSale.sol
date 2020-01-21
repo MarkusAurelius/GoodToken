@@ -28,7 +28,7 @@ contract FiatContract {
     using SafeMath for uint256; 
     uint256 private _weiRaised;
     uint256 private _rate;
-    address payable _owner;
+    address payable private _owner;
     GoodLifeToken private _token;
     bool private stopped = false;
 

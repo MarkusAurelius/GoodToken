@@ -9,6 +9,9 @@ var HDWallet = require('truffle-hdwallet-provider');
 
 
 module.exports = {
+
+  plugins: ["truffle-security"],
+
   // See <http://truffleframework.com/docs/advanced/configuration>
   // for more about customizing your Truffle configuration!
   networks: {

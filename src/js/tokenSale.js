@@ -42,7 +42,15 @@ initContract: function() {
         tokenSale.contracts.GLTMerchantSale.setProvider(tokenSale.web3Provider);
 
     });
-    // Use our contract to retrieve and mark the adopted pets
+
+    $.getJSON('GoodLifeToken.json', function(data) {
+        // Get the necessary contract artifact file and instantiate it with truffle-contract
+      var GoodLifeTokenArtifact = data;
+      tokenSale.contracts.GoodLifeToken = TruffleContract(GoodLifeTokenArtifact);
+      // Set the provider for our contract
+      tokenSale.contracts.GoodLifeToken.setProvider(tokenSale.web3Provider);
+    });
+  
     return tokenSale.bindEvents();
 },
 
@@ -58,17 +66,22 @@ handlePurchaseTokens: function() {
         if (error) {
             console.log(error);
         }
-            var tokenAmount = $("#tokenamount").val();
+            var eurAmount = $("#eur-amount").val();
             tokenSale.contracts.GLTMerchantSale.deployed().then(function(instance) {
                 gltSaleInstance = instance;
                 var account = accounts[0];
                 //There is currently no other chance unless to transfer the tokens to the single active account 
                 //due to restrictions of Metamask:
                 //https://medium.com/metamask/metamask-permissions-system-delay-retrospective-9c49d01039d6
-                return gltSaleInstance.buyTokens(accounts[0], tokenAmount, {from: accounts[0]});
-            }).then(function(result) {
+                return gltSaleInstance.buyTokens(accounts[0], eurAmount, {from: accounts[0]});
+            }).then(async function(result) {
+                var tokenAmount = await gltSaleInstance.getTokenAmount(eurAmount);
                 $("#tokens-purchased").text(tokenAmount);
                 $("#account").text(accounts[0]);
+                var tokenAddress = await gltSaleInstance.token({from: accounts[0]});
+                var goodLifeToken = await tokenSale.contracts.GoodLifeToken.at(tokenAddress, {from: accounts[0]});
+                var balanceOfCustomer = await goodLifeToken.balanceOf(accounts[0], {from: accounts[0]});
+                $("#account-balance").text(balanceOfCustomer);
             }).catch(function(err) {
                 console.log(err.message);
             });

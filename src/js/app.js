@@ -189,10 +189,8 @@ handleCollectTokens: function(tokensCollected) {
            //multiple accounts:
            //https://medium.com/metamask/metamask-permissions-system-delay-retrospective-9c49d01039d6
            //await goodLifeToken.collectTokens(accounts[0], accounts[0], tokensCollected, {from: accounts[0]});
-           console.log("Good Life Token Instance: " + goodLifeToken);
            var balanceOfCustomer = await goodLifeToken.balanceOf(accounts[0], {from: accounts[0]});
-           $("#account-balance").text(balanceOfCustomer);
-           //return Collect.displayCollectedTokens(tokenAmount);
+           //$("#account-balance").text(balanceOfCustomer);
          }).catch(function(err) {
             console.log(err.message);
          });

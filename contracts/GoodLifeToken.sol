@@ -7,6 +7,7 @@ import "openzeppelin-solidity/contracts/token/ERC20/ERC20Mintable.sol";
 import "openzeppelin-solidity/contracts/access/roles/MinterRole.sol";
 import "openzeppelin-solidity/contracts/utils/ReentrancyGuard.sol";
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
+import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 import "./roles/CustomerRole.sol";
 import "./Pausable.sol";
 
@@ -20,10 +21,12 @@ import "./Pausable.sol";
  */
 
 contract GoodLifeToken is ERC20, ERC20Detailed, ERC20Mintable, ReentrancyGuard, Ownable, CustomerRole, Pausable  {
+    using SafeMath for uint; 
+    using SafeMath for uint256;
 
     uint public _totalSupply;
-    uint transactionCount = 0;
-    bytes data;
+    uint private transactionCount = 1;
+    bytes private data;
     address private _owner;
     struct TransactionStruct {
         address sender;
@@ -32,7 +35,7 @@ contract GoodLifeToken is ERC20, ERC20Detailed, ERC20Mintable, ReentrancyGuard, 
         string typeOfTransaction;
     }
     //Store a list of transactions with an unique ascendant identifier
-    mapping (uint => TransactionStruct) transactionList;
+    mapping (uint256 => TransactionStruct) private transactionList;
     //mapping(address => mapping(address => uint)) allowed;
 
 
@@ -116,7 +119,8 @@ contract GoodLifeToken is ERC20, ERC20Detailed, ERC20Mintable, ReentrancyGuard, 
         returns (bool success) {
 
         emit LogCollectTokens(from, to, amountOfTokens); 
-        transactionCount++;
+        require(transactionCount > 0 && transactionCount < 256, "id must not be lower than 0 and larger than 255.");
+        transactionCount = transactionCount.add(1);
         TransactionStruct memory ts = transactionList[transactionCount];
         ts.sender = from;
         ts.recipient = to;
@@ -150,7 +154,8 @@ contract GoodLifeToken is ERC20, ERC20Detailed, ERC20Mintable, ReentrancyGuard, 
         returns (bool success) {
         
         emit LogRedeemTokens(from, numberOfTokensToRedeem); 
-        transactionCount++;
+        require(transactionCount > 0 && transactionCount < 256, "id must not be lower than 0 and larger than 255.");
+        transactionCount = transactionCount.add(1);
         TransactionStruct memory ts = transactionList[transactionCount];
         ts.sender = from;
         ts.recipient = address(0);
@@ -175,6 +180,7 @@ contract GoodLifeToken is ERC20, ERC20Detailed, ERC20Mintable, ReentrancyGuard, 
      * @param transactionId The id of the transaction the sender address should be retrieved for.
      */
     function getTransactionSenderAddress(uint transactionId) public view returns (address from) {
+        require(transactionId > 0 && transactionId < 256, "id must not be lower than 0 and larger than 255.");
         TransactionStruct memory ts = transactionList[transactionId];
         return ts.sender;
     }
@@ -185,6 +191,7 @@ contract GoodLifeToken is ERC20, ERC20Detailed, ERC20Mintable, ReentrancyGuard, 
      * @param transactionId The id of the transaction the recipient address should be retrieved for.
      */
     function getTransactionRecipientAddress(uint transactionId) public view returns (address to) {
+        require(transactionId > 0 && transactionId < 256, "id must not be lower than 0 and larger than 255.");
         TransactionStruct memory ts = transactionList[transactionId];
         return ts.recipient;
     }
@@ -195,6 +202,7 @@ contract GoodLifeToken is ERC20, ERC20Detailed, ERC20Mintable, ReentrancyGuard, 
      * @param transactionId The id of the transaction the transaction amount should be retrieved for.
      */
     function getTransactionAmount(uint transactionId) public view returns (uint amount) {
+       require(transactionId > 0 && transactionId < 256, "id must not be lower than 0 and larger than 255.");
        TransactionStruct memory ts = transactionList[transactionId];
        return ts.amount;
     }
@@ -205,6 +213,7 @@ contract GoodLifeToken is ERC20, ERC20Detailed, ERC20Mintable, ReentrancyGuard, 
      * @param transactionId The id of the transaction the transaction type should be retrieved for.
      */
     function getTransactionType(uint transactionId) public view returns (string memory typeOfTransaction) {
+       require(transactionId > 0 && transactionId < 256, "id must not be lower than 0 and larger than 255.");
        TransactionStruct memory ts = transactionList[transactionId];
        return ts.typeOfTransaction;
     }

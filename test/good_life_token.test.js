@@ -46,8 +46,8 @@ contract('GoodLifeToken', function(accounts) {
 
     it("Should check the transaction ID", async() => {
         var transactionCounter = await goodLifeToken.getTransactionCounter({from: accounts[0]}) 
-        var expected = 1
-        assert.equal(transactionCounter, expected, "Transaction id should be 1.") 
+        var expected = 2 
+        assert.equal(transactionCounter, expected, "Transaction id should be 2.") 
     })
 
     it("Should check the sender address", async() => {
