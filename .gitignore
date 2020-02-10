@@ -2,5 +2,7 @@ node_modules
 build
 bin
 bin/contracts
+bridge.log
 .vscode
 .secret
+

@@ -49,11 +49,8 @@ This project was developed with the following environment:
 - Install Web3:  `npm install web3`
 - Install lite-server: `npm install lite-server --save-dev`
 - Install bignumber.js: `npm install bignumber.js`
+- Install HdWallet-Provider: `npm install --save truffle-hdwallet-provider`
 
-
-  ```.sh
-  npm install -g truffle
-  ```
 
 ###### Front-end
 
@@ -74,20 +71,22 @@ npm install
 ```
 
 ###### Oracle - Oraclize
-```npm install lerna
+```.sh
+npm install lerna
 npm install ethereum/web3.js --save
 truffle install oraclize-api
 npx ethereum-bridge -a 9 -H 127.0.0.1 -p 8545 --dev
 ```
 
 ###### Ethereum Name Service
-```npm install @ensdomains/ens --save-dev
+```.sh
+npm install @ensdomains/ens --save-dev
 npm install @ensdomains/resolver
 ```
 
 ###### Uport
-```npm install --save ngrok express did-jwt uport-transports uport-credentials
-node src/js/server.js
+```.sh
+npm install --save ngrok express path
 ```
 
 ## Running the project locally
