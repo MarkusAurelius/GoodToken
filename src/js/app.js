@@ -162,16 +162,18 @@ Collect = {
 handleCollectTokens: function(tokensCollected) {
     
     var shoppingBasketInstance;
-    var tokenAmount;
+    var tokensCollected;
+    const gasAmt = 3e6;
     web3.eth.getAccounts(function(error, accounts) {
         if (error) {
             console.log(error);
         }
-        Collect.contracts.ShoppingBasket.deployed().then(function(instance) {
+        Collect.contracts.ShoppingBasket.deployed().then(async function(instance) {
         shoppingBasketInstance = instance;
         var account = accounts[0];
-        return shoppingBasketInstance.purchaseItems.call({from: accounts[0]});
-         }).then(async function(tokensCollected) {
+        tokensCollected = await shoppingBasketInstance.getCurrentAmountOfCollectedTokens.call({from: accounts[0]});
+        return shoppingBasketInstance.purchaseItems({from: accounts[0], gas: gasAmt});
+         }).then(async function(result) {
            $("#tokens-collected").text(tokensCollected);
            var crowdsale = await Collect.contracts.GLTMerchantSale.deployed({from: accounts[0]});
            var tokenAddress = await crowdsale.token({from: accounts[0]});

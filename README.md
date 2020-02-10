@@ -27,12 +27,14 @@ The web based demo application is currently able to use only one account because
 
 This project was developed with the following environment:
 
-- Ubuntu Ubuntu 18.04.2 LTS
+- Ubuntu 18.04.2 LTS
 - npm 6.9.0
 - Truffle v5.1.8 (core: 5.1.8)
 - Solidity v0.5.0 (solc-js)
-- Node v12.14.1
-- Web3.js v1.0.0-beta.37
+- Node v10.16.3
+- Web3.js v1.2.5
+- Ngrok 3.2.7
+- Express 4.17.1
 
 
 #### 1 - Requirements:
@@ -46,6 +48,7 @@ This project was developed with the following environment:
 - Install [OpenZeppelin](https://openzeppelin.com/contracts/): `npm install openzeppelin-solidity@2.3.0`
 - Install Web3:  `npm install web3`
 - Install lite-server: `npm install lite-server --save-dev`
+- Install bignumber.js: `npm install bignumber.js`
 
 
   ```.sh
@@ -68,6 +71,23 @@ git clone https://github.com/MarkusAurelius1976/GoodToken.git
 ```.sh
 cd good-life-token 
 npm install
+```
+
+###### Oracle - Oraclize
+```npm install lerna
+npm install ethereum/web3.js --save
+truffle install oraclize-api
+npx ethereum-bridge -a 9 -H 127.0.0.1 -p 8545 --dev
+```
+
+###### Ethereum Name Service
+```npm install @ensdomains/ens --save-dev
+npm install @ensdomains/resolver
+```
+
+###### Uport
+```npm install --save ngrok express did-jwt uport-transports uport-credentials
+node src/js/server.js
 ```
 
 ## Running the project locally

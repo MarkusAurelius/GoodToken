@@ -44,7 +44,7 @@ contract TestGLTMerchantSale {
 
     function testTokenAmount() public {
         uint256 amountInEUR = 2000;
-        uint256 tokenAmount = merchantSale.getTokenAmount(amountInEUR);
+        uint256 tokenAmount = merchantSale.getTokenAmount(amountInEUR, 0);
         uint256 expected = (amountInEUR * 50000000000000 * 100) / rate;
         Assert.equal(tokenAmount, expected, "Amount of tokens should be 200.000.");
     }

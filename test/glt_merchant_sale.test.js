@@ -18,6 +18,7 @@ contract('GLTMerchantSale', function(accounts) {
     const merchant = accounts[2]
 
     const rate = "50000000000000"
+    const gasAmt = 3e6
 
     let merchantSale
 
@@ -29,12 +30,21 @@ contract('GLTMerchantSale', function(accounts) {
         goodLifeTokenInstance.addMinter(merchantSale.address)
     })
 
-    it("should raise an amount of wei by purchachsing a given amount of EUR", async() => {
+    it("should raise an amount of wei by purchasing a given amount of EUR", async() => {
         const amountInEUR = 2000
-        await merchantSale.buyTokens(merchant, amountInEUR, {from: accounts[0]})
+        /*var amountOfTokens = await merchantSale.buyTokens(merchant, amountInEUR, 0, {from: accounts[0]}).send({
+            from: owner,
+            gas: gasAmt
+          })*/
+        var amountOfTokens = await merchantSale.buyTokens.call(merchant, amountInEUR, 0, {from: accounts[0]})
+        console.log("Number of Tokens: " + amountOfTokens)
         var weiRaised = await merchantSale.weiRaised.call({from: accounts[0]})
-        var expected = amountInEUR * 50000000000000 * 100 
-        assert.equal(weiRaised, expected, "WeiRaised should be 1E+19")
+        console.log("Wei raised: " + weiRaised)
+        var expected = 200000
+        assert.equal(amountOfTokens, expected, "Number of tokens should be 20.000.")
+        expected = amountInEUR * 50000000000000 * 100 
+        //assert.equal(weiRaised, expected, "WeiRaised should be 1E+19.")
+       
     })
 
 })

@@ -1,4 +1,3 @@
-
 pragma solidity ^0.5.0;
 
 import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
@@ -66,7 +65,7 @@ contract GoodLifeToken is ERC20, ERC20Detailed, ERC20Mintable, ReentrancyGuard, 
      */
     constructor () public ERC20Detailed("GoodLifeToken", "GLT", 0) {
         _owner = msg.sender;
-        _mint(msg.sender,  40000000000000000000);
+        _mint(msg.sender,  5000000000000);
         //transactionCount = 1;
     }
 

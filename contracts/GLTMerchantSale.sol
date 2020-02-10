@@ -11,14 +11,6 @@ import "./GoodLifeToken.sol";
 import "./roles/MerchantRole.sol";
 
 
-contract FiatContract {
-    function ETH(uint _id) public view returns (uint256);
-    function USD(uint _id) public view returns (uint256);
-    function EUR(uint _id) public view returns (uint256);
-    function GBP(uint _id) public view returns (uint256);
-    function updatedAt(uint _id) public view returns (uint);
-}
-
  /*
   * This contract implemnts a sale of the "Good Life Token". Since the contract inherited from the MintedCrowdsale contract
   * only ERC20Mintable tokens can be sold by {GLTMerchantSale}.
@@ -27,7 +19,7 @@ contract FiatContract {
   contract GLTMerchantSale is MintedCrowdsale, Ownable, MerchantRole  {
     using SafeMath for uint256; 
     uint256 private _weiRaised;
-    uint256 private _rate;
+    uint256 private _EURCentWeiRate;
     address payable private _owner;
     GoodLifeToken private _token;
     bool private stopped = false;
@@ -46,24 +38,19 @@ contract FiatContract {
     )
         public
         Crowdsale(rate, wallet, token) {
-        _rate = rate;
+        _EURCentWeiRate = rate;
         _weiRaised = 0;
         _owner = msg.sender;
         _token = token;
 
     }
 
-    FiatContract public price;
 
-    /*function getPrice() public returns(uint256 priceOfOneTokenInWei) {
-      uint256 oneCent = price.EUR(0);// return price of 0.01 Euro in Wei
-      return priceOfOneTokenInEuroWei.mul(oneCent).div(10000000000000000);
-    } */
 
 
     //Emits an event if a token was purchased
     event TokensPurchased (address indexed account, address beneficiary, uint256 amountOfTokens);
-
+    event WeiRaised (uint256 weiRaised, uint256 weiAmount);
 
     modifier isAdmin() {
       require(msg.sender == _owner);
@@ -85,21 +72,26 @@ contract FiatContract {
       * @param amountInEUR The amount in EUR currency that should be returned in amount of tokens. 
       * return The amount of tokens
       */
-    function getTokenAmount(uint256 amountInEUR) public view returns(uint256) {
-      //multiply 'provided amountInEUR * WEI in EURCent * 100 Cent
-      //uint256 weiAmount = amountInEUR * 50000000000000 * 100;
-      uint256 weiAmount = amountInEUR.mul(50000000000000).mul(100);
-      return  weiAmount.div(_rate);
-      //return _getTokenAmount(weiAmount);
+    function getTokenAmount(uint256 amountInEUR, uint rateETHEUR) public view returns(uint256) {
+      
+      if(rateETHEUR > 0) {
+        uint rateETHTokens = 15000;
+        return (rateETHTokens).div(rateETHEUR).mul(amountInEUR);
+      } else {      
+        //multiply 'provided amountInEUR * WEI in EURCent * 100 Cent
+        //uint256 weiAmount = amountInEUR * 50000000000000 * 100;
+        uint256 weiAmount = amountInEUR.mul(50000000000000).mul(100);
+        return weiAmount.div(_EURCentWeiRate);
+      }
     }
 
     /*
      * Returns the the number of weis for this GLTMerchantSale instance. 
      */
     function weiRaised() public view returns(uint256) {
+      //emit WeiRaised(_weiRaised);
       return _weiRaised;
     }
-
 
    /**
      * @dev low level token purchase 
@@ -111,34 +103,33 @@ contract FiatContract {
      * @param beneficiary Recipient of the token purchase
      * @param amountInEUR Amount of EUR the tokens should be purchased for 
      */
-    function buyTokens(address beneficiary, uint256 amountInEUR) public 
+    function buyTokens(address beneficiary, uint256 amountInEUR, uint rateETHEUR) public
         nonReentrant 
         onlyOwner
         stopInEmergency
         onlyMerchant
-        payable {
-          
-          price = FiatContract(0x8055d0504666e2B6942BeB8D6014c964658Ca591); // MAINNET ADDRESS
-          price = FiatContract(0x2CDe56E5c8235D6360CCbb0c57Ce248Ca9C80909); // TESTNET ADDRESS (ROPSTEN)
+        payable 
+        returns(uint256) {
 
           uint256 weiAmount = amountOfETHInEUR(amountInEUR);
 
           _preValidatePurchase(beneficiary, weiAmount);
 
           // calculate token amount to be created
-          uint256 tokens = getTokenAmount(amountInEUR);
+          uint256 tokens = getTokenAmount(amountInEUR, rateETHEUR);
 
           // update state
           _weiRaised = _weiRaised.add(weiAmount);
+          emit WeiRaised(_weiRaised, weiAmount);
 
-          emit TokensPurchased(msg.sender, beneficiary, tokens);
           _processPurchase(beneficiary, tokens);
-          //emit TokensPurchased(msg.sender, beneficiary, weiAmount, tokens);
+          emit TokensPurchased(msg.sender, beneficiary, tokens);          
 
           _updatePurchasingState(beneficiary, weiAmount);
 
           _forwardFunds();
           _postValidatePurchase(beneficiary, weiAmount);
+          return tokens;
     }
     // Are we sure?????????????????????????????????????? to use selfdestruct here
     function destroy() public onlyOwner {

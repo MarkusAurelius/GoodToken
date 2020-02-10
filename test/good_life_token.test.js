@@ -31,7 +31,7 @@ contract('GoodLifeToken', function(accounts) {
         goodLifeToken = await GoodLifeToken.at(tokenAddress, {from: accounts[0]})
         merchantSale = await GLTMerchantSale.new(ethRate, wallet, tokenAddress, {from: accounts[0]})
         await goodLifeToken.addMinter(merchantSale.address)
-        await merchantSale.buyTokens(merchant, tokenPurchaseInEUR, {from: accounts[0]})
+        await merchantSale.buyTokens(merchant, tokenPurchaseInEUR, 0, {from: accounts[0]})
         var balanceOfMerchant = await goodLifeToken.balanceOf(merchant, {from: accounts[0]})
         await goodLifeToken.collectTokens(merchant, customer, amountOfTokens, {from: accounts[0]})
     })
@@ -73,7 +73,7 @@ contract('GoodLifeToken', function(accounts) {
 
     it("Should check the token account balance of the merchant after a token collection", async() => {
         var balanceOfMerchant = await goodLifeToken.balanceOf(merchant, {from: accounts[0]})
-        var expected = await merchantSale.getTokenAmount(2000, {from: accounts[0]}) - 150
+        var expected = await merchantSale.getTokenAmount(2000, 0, {from: accounts[0]}) - 150
         assert.equal(balanceOfMerchant, expected, "Balance of merchant is not correct.")
     })
 

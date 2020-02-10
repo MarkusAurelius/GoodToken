@@ -107,6 +107,16 @@ contract ShoppingBasket {
        return collectedAmountOfTokens;      
        
   }
+
+  /*
+   * Returns the amount of currently collected tokens.
+   *
+   */
+  function getCurrentAmountOfCollectedTokens()
+    public
+    returns (uint) {
+      return tokenAmount;
+    }
   
   /*
    * Returns all attributes of an item dependent on the provided id of the item.
