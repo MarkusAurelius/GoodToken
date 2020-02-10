@@ -114,7 +114,7 @@ contract GoodLifeToken is ERC20, ERC20Detailed, ERC20Mintable, ReentrancyGuard, 
     function collectTokens(address from, address to, uint amountOfTokens) public 
         whenNotPaused
         merchantHasEnoughTokens(from, amountOfTokens)
-        //onlyCustomer
+        onlyCustomer
         returns (bool success) {
 
         emit LogCollectTokens(from, to, amountOfTokens); 
@@ -149,7 +149,7 @@ contract GoodLifeToken is ERC20, ERC20Detailed, ERC20Mintable, ReentrancyGuard, 
         whenNotPaused
         nonReentrant public 
         customerHasEnoughTokens(from, numberOfTokensToRedeem)
-        //onlyCustomer
+        onlyCustomer
         returns (bool success) {
         
         emit LogRedeemTokens(from, numberOfTokensToRedeem); 

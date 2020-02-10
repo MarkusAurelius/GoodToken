@@ -12,11 +12,18 @@ When the customer has collected a sufficient a amount of tokens he can spend tho
 For a sustainable loyalty program local merchants who are selling fair traded and local organic products should beable to purchase a Good Life Token for a certain amount of Euros. This token should be given to a customer of his store for every purchase. The amount of token the customer will be provided with depends on the purchase amount. The customer will be able to redeem / to use this tokens for a (partial) payment of one of the next purchases at a merchant store who is participating in this loyalty program.  
 
 **User Stories:**
-A merchant is purchasing a certain amount of token for an amount of Euros. This amount of tokens will bestored into his account.
+- A merhchant is performing a login via uport in order to invoke the page of the Good Life Token Sale.
 
-For a purchase that a customer of the merchant is performing an amount of token (depending on the purchase amount) will be transferred from the customer to the merchant.
+- A merchant is purchasing a certain amount of token for an amount of Euros. This amount of tokens will bestored into his account.
+  The amount of token that the merchant is purcasing is either linked to the provided amount of EUR with a fixed rate (1 Good Life Token = 1 EUR Cent) or it is calculated based on the rate of Ether / Euro. The assumption in doing so is, that a rate of 150 EUR = 1 Ether = 15.000 Good Life Tokens corresponds to the fixed linkage of Euros and tokens. If the rate is higher than this the purchase for the merchant is more expensive if the rate is below the buying will become cheaper.
 
-A customer is making a purchase at a store of a merchant and will partially pay the purchase amount with tokens.
+- For a purchase that a customer of the merchant is performing an amount of token (depending on the purchase amount) will be transferred from the customer to the merchant.
+
+- A customer is selecting certain products of offered goods and is putting them into his shopping basket.
+
+- A customer is making a purchase at a store of a merchant and will partially pay the purchase amount with tokens.
+
+- Assign the Ethereum address of the token to a human readable name "goodlifetoken.eth".
 
 The process flow between all stakeholders looks as follows:
 ![Alt text](/src/images/GoodLifeToken_Flow_Chart.png?raw=true "Process Flow Chart")
@@ -72,7 +79,6 @@ npm install
 
 ###### Oracle - Oraclize
 ```.sh
-npm install lerna
 npm install ethereum/web3.js --save
 truffle install oraclize-api
 npx ethereum-bridge -a 9 -H 127.0.0.1 -p 8545 --dev

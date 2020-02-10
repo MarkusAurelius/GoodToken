@@ -23,22 +23,22 @@ contract('GLTMerchantSale', function(accounts) {
     let merchantSale
 
     beforeEach(async () => {
-        var crowdsale = await GLTMerchantSale.deployed({from: accounts[0]})
-        var tokenAddress = await crowdsale.token({from: accounts[0]})
-        var goodLifeTokenInstance = await GoodLifeToken.at(tokenAddress, {from: accounts[0]})
-        merchantSale = await GLTMerchantSale.new(rate, wallet, tokenAddress, {from: accounts[0]})
+        var crowdsale = await GLTMerchantSale.deployed({from: owner})
+        var tokenAddress = await crowdsale.token({from: owner})
+        var goodLifeTokenInstance = await GoodLifeToken.at(tokenAddress, {from: owner})
+        merchantSale = await GLTMerchantSale.new(rate, wallet, tokenAddress, {from: owner})
         goodLifeTokenInstance.addMinter(merchantSale.address)
     })
 
     it("should raise an amount of wei by purchasing a given amount of EUR", async() => {
         const amountInEUR = 2000
-        /*var amountOfTokens = await merchantSale.buyTokens(merchant, amountInEUR, 0, {from: accounts[0]}).send({
+        /*var amountOfTokens = await merchantSale.buyTokens(merchant, amountInEUR, 0, {from: owner}).send({
             from: owner,
             gas: gasAmt
           })*/
-        var amountOfTokens = await merchantSale.buyTokens.call(merchant, amountInEUR, 0, {from: accounts[0]})
+        var amountOfTokens = await merchantSale.buyTokens.call(merchant, amountInEUR, 0, {from: owner})
         console.log("Number of Tokens: " + amountOfTokens)
-        var weiRaised = await merchantSale.weiRaised.call({from: accounts[0]})
+        var weiRaised = await merchantSale.weiRaised.call({from: owner})
         console.log("Wei raised: " + weiRaised)
         var expected = 200000
         assert.equal(amountOfTokens, expected, "Number of tokens should be 20.000.")

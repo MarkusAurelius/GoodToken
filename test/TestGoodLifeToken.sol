@@ -46,7 +46,7 @@ contract TestGoodLifeToken {
     function testTotalSupply() public {
         
         uint256 totalSupply = goodLifeToken.totalSupply();
-        uint256 expected = 40000000000000000000;
+        uint256 expected = 5000000000000;
         Assert.equal(totalSupply, expected, "Total Supply should be 40000000000000000000.");
     }
 

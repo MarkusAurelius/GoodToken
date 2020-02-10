@@ -7,6 +7,7 @@ import "openzeppelin-solidity/contracts/token/ERC20/ERC20Detailed.sol";
 import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 import "openzeppelin-solidity/contracts/crowdsale/Crowdsale.sol";
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
+import "./Pausable.sol";
 import "./GoodLifeToken.sol";
 import "./roles/MerchantRole.sol";
 
@@ -16,7 +17,7 @@ import "./roles/MerchantRole.sol";
   * only ERC20Mintable tokens can be sold by {GLTMerchantSale}.
   * Token ownership should be transferred to MintedCrowdsale for minting.
   */
-  contract GLTMerchantSale is MintedCrowdsale, Ownable, MerchantRole  {
+  contract GLTMerchantSale is MintedCrowdsale, Ownable, MerchantRole, Pausable  {
     using SafeMath for uint256; 
     uint256 private _weiRaised;
     uint256 private _EURCentWeiRate;
@@ -104,6 +105,7 @@ import "./roles/MerchantRole.sol";
      * @param amountInEUR Amount of EUR the tokens should be purchased for 
      */
     function buyTokens(address beneficiary, uint256 amountInEUR, uint rateETHEUR) public
+        whenNotPaused
         nonReentrant 
         onlyOwner
         stopInEmergency
@@ -131,16 +133,5 @@ import "./roles/MerchantRole.sol";
           _postValidatePurchase(beneficiary, weiAmount);
           return tokens;
     }
-    // Are we sure?????????????????????????????????????? to use selfdestruct here
-    function destroy() public onlyOwner {
-      selfdestruct(_owner);
-    }
     
-    /*
-    *
-    */
-    function destroyAndSend(address payable recipient) public onlyOwner {
-      selfdestruct(recipient);
-    }
-
  }
