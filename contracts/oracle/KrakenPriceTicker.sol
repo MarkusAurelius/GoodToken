@@ -2,6 +2,13 @@ pragma solidity >= 0.5.0 < 0.6.0;
 
 import "./provableAPI.sol";
 
+/*
+ * Contract which acts as an Oracle and retrieves rates from the Kraken Price Ticker service.
+ * This contract was taken from the Github repository 
+ * https://github.com/provable-things/ethereum-examples/tree/master/solidity/truffle-examples/kraken-price-ticker
+ * The rate calculation was changed from ETH/XBT to ETH/EUR.
+ */
+
 contract KrakenPriceTicker is usingProvable {
 
     string public priceETHEUR;
@@ -17,7 +24,14 @@ contract KrakenPriceTicker is usingProvable {
         provable_setProof(proofType_Android | proofStorage_IPFS);
         update(); // Update price on contract creation...
     }
-
+    
+    /*
+     * Callback function which retrieves the Ether / Euro rate.
+     * 
+     * @param _myid Id of the request
+     * @param _result Result of the query
+     * @param _proof
+     */
     function __callback(
         bytes32 _myid,
         string memory _result,
@@ -31,6 +45,9 @@ contract KrakenPriceTicker is usingProvable {
         emit LogNewKrakenPriceTicker(priceETHEUR);
     }
 
+    /*
+     * This function is executing the query towards the Kraken Price Ticker service.
+     */
     function update()
         public
         payable

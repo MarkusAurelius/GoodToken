@@ -37,9 +37,7 @@ contract('GLTMerchantSale', function(accounts) {
             gas: gasAmt
           })*/
         var amountOfTokens = await merchantSale.buyTokens.call(merchant, amountInEUR, 0, {from: owner})
-        console.log("Number of Tokens: " + amountOfTokens)
         var weiRaised = await merchantSale.weiRaised.call({from: owner})
-        console.log("Wei raised: " + weiRaised)
         var expected = 200000
         assert.equal(amountOfTokens, expected, "Number of tokens should be 20.000.")
         expected = amountInEUR * 50000000000000 * 100 

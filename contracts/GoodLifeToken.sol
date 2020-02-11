@@ -59,6 +59,10 @@ contract GoodLifeToken is ERC20, ERC20Detailed, ERC20Mintable, ReentrancyGuard, 
     event LogRedeemTokens(address from, uint numberOfTokensToRedeem); 
     //Event emitted that contains the transaction counter which correponds the number of transactions performed successfully
     event LogTransactionCounter(uint transactionCount);
+    //Event emitted that contains the balance of the merchant after a transaction
+    event LogAccountBalanceMerchant(address merchant, uint balanceOf);
+    //Event emitted that contains the balance of the customer after a transaction
+    event LogAccountBalanceCustomer(address customer, uint balanceOf);
 
     /* 
      * Constructor - Creates an ERC20Detailed token provided with the name and the symbol
@@ -115,9 +119,9 @@ contract GoodLifeToken is ERC20, ERC20Detailed, ERC20Mintable, ReentrancyGuard, 
         whenNotPaused
         merchantHasEnoughTokens(from, amountOfTokens)
         onlyCustomer
-        returns (bool success) {
+        returns (bool) {
 
-        emit LogCollectTokens(from, to, amountOfTokens); 
+        emit LogCollectTokens(from, to, amountOfTokens);
         require(transactionCount > 0 && transactionCount < 256, "id must not be lower than 0 and larger than 255.");
         transactionCount = transactionCount.add(1);
         TransactionStruct memory ts = transactionList[transactionCount];
@@ -126,9 +130,12 @@ contract GoodLifeToken is ERC20, ERC20Detailed, ERC20Mintable, ReentrancyGuard, 
         ts.amount = amountOfTokens;
         ts.typeOfTransaction = "Collection";
         transactionList[transactionCount] = ts;
+        bool success = transferFrom(from, to, amountOfTokens);
         emit LogTransactionCounter(transactionCount);
+        emit LogAccountBalanceMerchant(from, balanceOf(from));
+        emit LogAccountBalanceCustomer(to, balanceOf(to));
 
-        return transferFrom(from, to, amountOfTokens);
+        return success;
     }
 
     /*
@@ -152,7 +159,7 @@ contract GoodLifeToken is ERC20, ERC20Detailed, ERC20Mintable, ReentrancyGuard, 
         onlyCustomer
         returns (bool success) {
         
-        emit LogRedeemTokens(from, numberOfTokensToRedeem); 
+        emit LogRedeemTokens(from, numberOfTokensToRedeem);
         require(transactionCount > 0 && transactionCount < 256, "id must not be lower than 0 and larger than 255.");
         transactionCount = transactionCount.add(1);
         TransactionStruct memory ts = transactionList[transactionCount];
@@ -163,6 +170,7 @@ contract GoodLifeToken is ERC20, ERC20Detailed, ERC20Mintable, ReentrancyGuard, 
         transactionList[transactionCount] = ts;
         _burn(from, numberOfTokensToRedeem);    
         emit LogTransactionCounter(transactionCount);
+        emit LogAccountBalanceCustomer(from, balanceOf(from));
         return true;
     }
 

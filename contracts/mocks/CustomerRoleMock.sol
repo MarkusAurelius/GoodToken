@@ -28,13 +28,6 @@ pragma solidity ^0.5.0;
 import "../roles/CustomerRole.sol";
 
 contract CustomerRoleMock is CustomerRole {
-    constructor() public CustomerRole() {
-        super._addCustomer(msg.sender);
-    }
-
-    function addCustomer(address account) public onlyCustomer {
-        super._addCustomer(account);
-    }
 
     function removeCustomer(address account) public {
         _removeCustomer(account);

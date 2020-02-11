@@ -28,14 +28,6 @@ pragma solidity ^0.5.0;
 import "../roles/MerchantRole.sol";
 
 contract MerchantRoleMock is MerchantRole {
-    constructor() public MerchantRole() {
-        super._addMerchant(msg.sender);
-    }
-
-    function addMerchant(address account) public onlyMerchant {
-        super._addMerchant(account);
-    }
-
     function removeMerchant(address account) public {
         _removeMerchant(account);
     }

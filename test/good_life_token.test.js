@@ -90,8 +90,13 @@ contract('GoodLifeToken', function(accounts) {
         assert.equal(balanceOfCustomer, expected, "Balance of customer should be 100.")
     })
 
-    it("Tokens should only redeemed if for the customer are enough tokens available", async() => {
+    it("Tokens should only be redeemed if for the customer are enough tokens available", async() => {
         await catchRevert(goodLifeToken.redeemTokens(customer, 151, {from: owner}))
+    })
+
+    it("Tokens should only be collected by the customer if the merchant has got a sufficient amount of tokens available", async() => {
+        var balanceOfMerchant = await goodLifeToken.balanceOf(merchant, {from: owner})
+        await catchRevert(goodLifeToken.collectTokens(merchant, customer, 199900, {from: owner}))
     })
 
 })
