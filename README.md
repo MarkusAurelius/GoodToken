@@ -12,7 +12,7 @@ When the customer has collected a sufficient a amount of tokens he will be able 
 For a sustainable loyalty program local merchants who are selling fair traded and local organic products should be able to purchase a Good Life Token for a certain amount of Euros. This token should be given to a customer of his store for every purchase. The amount of token the customer will be provided with depends on the purchase amount, the eco foot print and the quantity of the product. The customer will be able to redeem / to use this tokens for a (partial) payment of one of the next purchases at a merchant store who is participating in this loyalty program.  
 
 **User Stories:**
-- As a merhchant I would like to perform a login by using my uport Mobile app in order to invoke the page of the Good Life Token Sale.
+- As a merchant I would like to perform a login by using my uport Mobile app in order to invoke the page of the Good Life Token Sale.
 
 - As a merchant I would like to purchase a certain amount of token for a given amount of Euros. This amount of tokens will bes tored into my account.
   The amount of token that I want to purchase as a merchant is either linked to the provided amount of EUR with a fixed rate (1 Good Life Token = 1 EUR Cent) or it is calculated based on the rate of Ether / Euro provided by an external data source (Oracle Kraken Price Ticker). The assumption in doing so is, that a rate of 150 EUR = 1 Ether = 15.000 Good Life Tokens corresponds to the fixed linkage of Euros and tokens. If the rate is higher than this the purchase for the merchant will be more expensive if the rate is below the buying will become cheaper.
