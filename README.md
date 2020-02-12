@@ -14,8 +14,8 @@ For a sustainable loyalty program local merchants who are selling fair traded an
 **User Stories:**
 - As a merchant I would like to perform a login by using my uport Mobile app in order to invoke the page of the Good Life Token Sale.
 
-- As a merchant I would like to purchase a certain amount of token for a given amount of Euros. This amount of tokens will bes tored into my account.
-  The amount of token that I want to purchase as a merchant is either linked to the provided amount of EUR with a fixed rate (1 Good Life Token = 1 EUR Cent) or it is calculated based on the rate of Ether / Euro provided by an external data source (Oracle Kraken Price Ticker). The assumption in doing so is, that a rate of 150 EUR = 1 Ether = 15.000 Good Life Tokens corresponds to the fixed linkage of Euros and tokens. If the rate is higher than this the purchase for the merchant will be more expensive if the rate is below the buying will become cheaper.
+- As a merchant I would like to purchase a certain amount of tokens for a given amount of Euros. This amount of tokens will be stored into my account.
+  The amount of tokens that I want to purchase as a merchant is either linked to the provided amount of EUR by a fixed rate (1 Good Life Token = 1 EUR Cent) or it is calculated based on the rate of Ether / Euro provided by an external data source (Oracle Kraken Price Ticker). The assumption in doing so is, that a rate of 150 EUR = 1 Ether = 15.000 Good Life Tokens corresponds to the fixed linkage of Euros and tokens. If the rate is higher than this the purchase for the merchant will be more expensive whereas if the rate is below 150 EUR the buying will become cheaper.
 
 - As a customer I would like to select a range of products by putting them into my shopping basket.
 
