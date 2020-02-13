@@ -7,7 +7,7 @@ Merchants of small organic stores have got frequently the challenge to build and
 
 **Customers:**
 Customers will probably change their consumer decisions if they are incentivized with "Good-Life-Tokens" for each purchase they are doing in an organic store that is participating in "Good-Life-Token"-based loyalty programme. Depending on a product a customer is purchasing he gets a certain amount of "Good-Life-Tokens". Each product has got a different Eco Footprint Factor, which serves as a multiplier for the token calculation, that consists of the price of the product (for each cent one token is given) multiplied by the Eco Footprint Factor. In doing so one cent correspondents to one token. The amount of collected tokens is shown in his shopping basket. When finalizing the purchase the amount of token is funded to the wallet of the customer.
-When the customer has collected a sufficient a amount of tokens he will be able spend those for his next purchase. 
+When the customer has collected a sufficient a amount of tokens he will be able spend those for his next purchase. In doing so he would have to spend one token for one EUR cent of the purchase amount.
 
 For a sustainable loyalty program local merchants who are selling fair traded and local organic products should be able to purchase a Good Life Token for a certain amount of Euros. This token should be given to a customer of his store for every purchase. The amount of token the customer will be provided with depends on the purchase amount, the eco foot print and the quantity of the product. The customer will be able to redeem / to use this tokens for a (partial) payment of one of the next purchases at a merchant store who is participating in this loyalty program.  
 
@@ -22,6 +22,9 @@ For a sustainable loyalty program local merchants who are selling fair traded an
 - As a customer I would like to be rewarded for a purchase at a store that is participating at the Good Life Token loyalty program by an amount of tokens which depends on the eco foot print, the price and the quantity of the products which I am going to buy. 
 
 - Assign the Ethereum address of the token to a human readable name "goodlifetoken.eth".
+
+**General Restrictions:**
+Currently no redemption in the user interface implemented.
 
 **UX Restrictions:**
 The UI only consists of very elementary and simple design elements and features.
