@@ -27,7 +27,7 @@
     "chai": "^4.2.0",
     "did-jwt": "^4.0.0",
     "ethereum-ens": "^0.8.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "ngrok": "^3.2.7",
     "openzeppelin-solidity": "^2.3.0",
     "path": "^0.12.7",
